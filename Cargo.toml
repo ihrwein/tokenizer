@@ -1,0 +1,11 @@
+[package]
+name = "tokenizer"
+version = "0.1.0"
+authors = ["Tibor Benke <ihrwein@gmail.com>"]
+build = "build.rs"
+
+[build-dependencies]
+lalrpop = "0.6"
+
+[dependencies]
+lalrpop-util = "0.6"

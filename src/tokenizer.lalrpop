@@ -1,0 +1,33 @@
+use token::Token;
+
+grammar;
+
+pub Message: Vec<Token> =
+  <Token*>;
+
+Token: Token = {
+  Ipv4,
+  Prec1
+};
+
+Prec1 = {
+  Float,
+  Prec2
+};
+
+Prec2 = {
+  r".*" => { Token::Other(<>.to_string())}
+};
+
+Ipv4: Token = {
+  "." <o0:Octet> "." <o1:Octet> "." <o2:Octet> "." <o3:Octet> => {
+    Token::IPv4(format!("{}.{}.{}.{}", o0, o1, o2, o3))
+  }
+};
+
+Octet =
+  r"(25[0-5]|2[0-4][0-9]|[01]?[1-9][0-9]?)\.";
+
+Float: Token = {
+  r"[-+]?[0-9]*\.?[0-9]+" => { Token::Float(<>.to_string()) }
+};
